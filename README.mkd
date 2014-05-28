@@ -1,0 +1,83 @@
+Network Copy (ncp)
+==================
+Transferring files at the speed of: meh...
+
+TL;DR
+-----
+This tool is designed around the idea of quickly sending a file from point A to point B by copying a file directly as-is on to the network, and hoping that the receiving end will catch all of data.
+
+What this Tool Isn't
+--------------------
+- Secure (encrypt it before you send it ...)
+- Reliable (it does NOT check the file's integrity during nor after sending; it DOES use tcp)
+- A tool for intended uses of "long transmissions" 
+- A replacement for scp/ftp/torrents/etc/etc/etc...
+- A tool that sends multiple file
+- A way to send 64bit files to 32bit (file)systems
+
+What this Tool Is
+-----------------
+- Fast
+- Simple
+- Cross-Platform
+- Able to leverage ALL bandwidth available for transmission
+- Awesome
+- Leverages my [personal C "library"](https://github.com/ActuallyFro/TransitLib) (it's a collection of C macros that make me not get as po'ed at C vs. higher level languages)
+- A single file sender (zip up your files, or fork the code)
+
+Design
+------
+Leveraging [Dr. Ken Christensen's AWESOME NETWORK TOOLS](http://www.csee.usf.edu/~christen/tools/toolpage.html#tcpip) I was able to add a cross-platform network copy macro to my existing C library of macros.
+The intent was to have a sender and receiver to be stood up to quickly fire across a file as fast as possible without any extra overhead.
+For instance: I have that dang VirtualBox guest additions iso that I need to manually mount, more often than not, and I want to transfer it from my host machine to the VM without adding accounts or terribly bloated protocols/tools.
+
+My host machine is Windows, I am a gamer, and the SteamBox will never be a 100% solution for gaming, so I needed a cross-platform solution.
+I wanted any file on any OS to be able to be sent to any other OS.
+I looked at netcat, but you can never guarantee any version/comparabilities/etc.
+Plus having this as a C macro/api-ish-thing I could leverage it for a network backbone for many, many other projects.
+
+Also, I wanted to use what is "on the machine". 
+Other libraries exist, but that is just more bloat, dependency on ports, updates, etc, etc...
+I have always been a C programmer, so I have never been pampered with ANYTHING in my coding.
+
+Wait it doesn't this already exist?
+-----------------------------------
+In short: kinda (by name yes), but I didn't see it until after I had this well in development.
+I will give a major shout out to Fefe (Felix von Leitner) to making this tool all the back in 2000.
+However, it again lacks the cross-platform needs I want, and additionally wants to use broadcast/listening to transfer files.
+The ncp of 2000 is more apt to be called bcp because it will broadcast out the files to EVERYONE, but only on a LAN.
+I am making no contest to "take over the name of ncp" - simply I'm too lazy to refer to this as something else, and due to the lack of market presence I am cool having the same name.
+
+How Do I Use this Tool?
+-----------------------
+RTFM; --help
+
+Features of ncp
+---------------
+- A single binary contains both the sender and receiver logic
+- Ncp defaults to receiver mode when executed with NO FLAGS
+- Simple sending mode: ncp <file> <ip:port>
+- You can assign an ip, port, input file name, and output file name
+- Speeds up to 739Mbps (sustained transfer of 620ish Mbps) (A Ubuntu 12.04 iso would be transfered from one computer to another in 8 seconds...)
+
+Is there a GUI Version?
+-----------------------
+No.
+
+Will there be a GUI Version?
+----------------------------
+Maybe.
+
+How do you deal with files larger than 2^31 on Windows?
+-------------------------------------------------------
+Easy: POSIX and MinGW-w64.
+
+License (MIT)
+-------------
+Copyright (C) 2014 ActuallyFro
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
